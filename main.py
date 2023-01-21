@@ -62,7 +62,7 @@ app = Flask(__name__)
 @app.route("/home")
 def home():
     suggestions = get_suggestions()
-    return render_template('home.html',suggestions=suggestions)
+    return render_template('index.html',suggestions=suggestions)
 
 @app.route("/similarity",methods=["POST"])
 def similarity():
