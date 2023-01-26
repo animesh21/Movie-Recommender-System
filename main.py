@@ -19,8 +19,11 @@ def create_similarity():
     data = pd.read_csv('main_data.csv')
     print(f"loaded data: {len(data)}")
     cv = CountVectorizer()
+    print("vector created")
     count_matrix = cv.fit_transform(data['comb'])
+    print("fit transform done")
     similarity_var = cosine_similarity(count_matrix)
+    print("returning similarity data")
     return data, similarity_var
 
 
