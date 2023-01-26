@@ -160,5 +160,11 @@ def recommend():
                            movie_cards=movie_cards, reviews=movie_reviews, casts=casts, cast_details=cast_details)
 
 
+@app.route("/hello", methods=["GET", "POST"])
+def hello():
+    name = request.form.get('name', "World")
+    return f"<p>Method: {request.method}</p><br/><p>Hello, {name}</p>"
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ['PORT'])
