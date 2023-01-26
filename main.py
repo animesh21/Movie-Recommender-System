@@ -18,24 +18,26 @@ def create_similarity():
     data = pd.read_csv('main_data.csv')
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(data['comb'])
-    similarity = cosine_similarity(count_matrix)
-    return data, similarity
+    similarity_var = cosine_similarity(count_matrix)
+    return data, similarity_var
 
 
 def rcmd(m):
     m = m.lower()
-    data, similarity = create_similarity()
+    data, similarity_var = create_similarity()
+    print("similarity created")
     if m not in data['movie_title'].unique():
         return 'Sorry! try another movie name'
     else:
         i = data.loc[data['movie_title'] == m].index[0]
-        lst = list(enumerate(similarity[i]))
+        lst = list(enumerate(similarity_var[i]))
         lst = sorted(lst, key=lambda x: x[1], reverse=True)
         lst = lst[1:11]  # excluding first item since it is the requested movie itself
         l = []
         for i in range(len(lst)):
             a = lst[i][0]
             l.append(data['movie_title'][a])
+        print("returning data from rcmd")
         return l
 
 
@@ -69,11 +71,15 @@ def home():
 @app.route("/similarity", methods=["POST"])
 def similarity():
     movie = request.form['name']
+    print(f"movie in similarity: {movie}")
     rc = rcmd(movie)
-    if type(rc) == type('string'):
+    if isinstance(rc, str):
+        print(f"it is string: {rc}")
         return rc
     else:
+        print("it needs to be made a string")
         m_str = "---".join(rc)
+        print(m_str)
         return m_str
 
 
