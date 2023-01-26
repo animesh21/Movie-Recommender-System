@@ -1,4 +1,5 @@
 import os
+import traceback
 
 import numpy as np
 import pandas as pd
@@ -22,7 +23,11 @@ def create_similarity():
     print("vector created")
     count_matrix = cv.fit_transform(data['comb'])
     print("fit transform done")
-    similarity_var = cosine_similarity(count_matrix)
+    try:
+        similarity_var = cosine_similarity(count_matrix)
+    except Exception as e:
+        traceback.print_exc()
+        raise e
     print("returning similarity data")
     return data, similarity_var
 
