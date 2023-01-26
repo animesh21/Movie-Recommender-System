@@ -24,13 +24,9 @@ def create_similarity():
 
 def rcmd(m):
     m = m.lower()
-    try:
-        data.head()
-        similarity.shape
-    except:
-        data, similarity = create_similarity()
+    data, similarity = create_similarity()
     if m not in data['movie_title'].unique():
-        return ('Sorry! try another movie name')
+        return 'Sorry! try another movie name'
     else:
         i = data.loc[data['movie_title'] == m].index[0]
         lst = list(enumerate(similarity[i]))
@@ -73,13 +69,12 @@ def home():
 @app.route("/similarity", methods=["POST"])
 def similarity():
     movie = request.form['name']
-    return movie
-    # rc = rcmd(movie)
-    # if type(rc) == type('string'):
-    #     return rc
-    # else:
-    #     m_str = "---".join(rc)
-    #     return m_str
+    rc = rcmd(movie)
+    if type(rc) == type('string'):
+        return rc
+    else:
+        m_str = "---".join(rc)
+        return m_str
 
 
 @app.route("/recommend", methods=["POST"])
