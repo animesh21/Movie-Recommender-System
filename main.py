@@ -15,7 +15,9 @@ vectorizer = pickle.load(open('tranform.pkl', 'rb'))
 
 
 def create_similarity():
+    print("loading data...")
     data = pd.read_csv('main_data.csv')
+    print(f"loaded data: {len(data)}")
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(data['comb'])
     similarity_var = cosine_similarity(count_matrix)
