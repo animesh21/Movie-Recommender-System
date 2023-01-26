@@ -18,14 +18,11 @@ vectorizer = pickle.load(open('tranform.pkl', 'rb'))
 def create_similarity():
     print("loading data...")
     data = pd.read_csv('main_data.csv')
-    data = data[:len(data) // 2]
+    data = data[:int(len(data) * 0.75)]
     print(f"loaded data: {len(data)}")
     cv = CountVectorizer()
-    print("vector created")
     count_matrix = cv.fit_transform(data['comb'])
     print("fit transform done: {}; type: {}".format(count_matrix.shape[0], type(count_matrix)))
-    print("first row:\n")
-    print(count_matrix[0])
     similarity_var = cosine_similarity(count_matrix)
     print("returning similarity data")
     return data, similarity_var
@@ -46,7 +43,6 @@ def rcmd(m):
         for i in range(len(lst)):
             a = lst[i][0]
             l.append(data['movie_title'][a])
-        print("returning data from rcmd")
         return l
 
 
@@ -83,12 +79,9 @@ def similarity():
     print(f"movie in similarity: {movie}")
     rc = rcmd(movie)
     if isinstance(rc, str):
-        print(f"it is string: {rc}")
         return rc
     else:
-        print("it needs to be made a string")
         m_str = "---".join(rc)
-        print(m_str)
         return m_str
 
 
