@@ -73,12 +73,13 @@ def home():
 @app.route("/similarity", methods=["POST"])
 def similarity():
     movie = request.form['name']
-    rc = rcmd(movie)
-    if type(rc) == type('string'):
-        return rc
-    else:
-        m_str = "---".join(rc)
-        return m_str
+    return movie
+    # rc = rcmd(movie)
+    # if type(rc) == type('string'):
+    #     return rc
+    # else:
+    #     m_str = "---".join(rc)
+    #     return m_str
 
 
 @app.route("/recommend", methods=["POST"])
