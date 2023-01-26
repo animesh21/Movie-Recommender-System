@@ -18,6 +18,7 @@ vectorizer = pickle.load(open('tranform.pkl', 'rb'))
 def create_similarity():
     print("loading data...")
     data = pd.read_csv('main_data.csv')
+    data = data[:len(data) // 2]
     print(f"loaded data: {len(data)}")
     cv = CountVectorizer()
     print("vector created")
