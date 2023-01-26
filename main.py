@@ -1,5 +1,4 @@
 import os
-import traceback
 
 import numpy as np
 import pandas as pd
@@ -16,22 +15,17 @@ vectorizer = pickle.load(open('tranform.pkl', 'rb'))
 
 
 def create_similarity():
-    print("loading data...")
     data = pd.read_csv('main_data.csv')
     data = data[:int(len(data) * 0.75)]
-    print(f"loaded data: {len(data)}")
     cv = CountVectorizer()
     count_matrix = cv.fit_transform(data['comb'])
-    print("fit transform done: {}; type: {}".format(count_matrix.shape[0], type(count_matrix)))
     similarity_var = cosine_similarity(count_matrix)
-    print("returning similarity data")
     return data, similarity_var
 
 
 def rcmd(m):
     m = m.lower()
     data, similarity_var = create_similarity()
-    print("similarity created")
     if m not in data['movie_title'].unique():
         return 'Sorry! try another movie name'
     else:
@@ -76,7 +70,6 @@ def home():
 @app.route("/similarity", methods=["POST"])
 def similarity():
     movie = request.form['name']
-    print(f"movie in similarity: {movie}")
     rc = rcmd(movie)
     if isinstance(rc, str):
         return rc
@@ -162,12 +155,6 @@ def recommend():
                            vote_count=vote_count, release_date=release_date, runtime=runtime, status=status,
                            genres=genres,
                            movie_cards=movie_cards, reviews=movie_reviews, casts=casts, cast_details=cast_details)
-
-
-@app.route("/hello", methods=["GET", "POST"])
-def hello():
-    name = request.form.get('name', "World")
-    return f"<p>Method: {request.method}</p><br/><p>Hello, {name}</p>"
 
 
 if __name__ == '__main__':
