@@ -22,8 +22,7 @@ def create_similarity():
     cv = CountVectorizer()
     print("vector created")
     count_matrix = cv.fit_transform(data['comb'])
-    print("fit transform done")
-    raise Exception("test exception to check logging")
+    print("fit transform done: {}; type: {}".format(len(count_matrix), type(count_matrix)))
     try:
         similarity_var = cosine_similarity(count_matrix)
     except Exception as e:
